@@ -1,5 +1,6 @@
 #include<stdlib.h>
 
+
 #include "cell.c"
 
 struct cell*** initGrid(int h, int w) {
@@ -14,7 +15,7 @@ struct cell*** initGrid(int h, int w) {
 }
 
 void printGrid(struct cell*** grid, int h, int w) {
-	printf("grid: %p\n", grid);
+	printf("\e[1;1H\e[2J"); // Clear screen with regex
 	for (int y=0;y<h;y++) {
 		for (int x=0;x<w;x++) {
 			if (grid[y][x] != NULL)
