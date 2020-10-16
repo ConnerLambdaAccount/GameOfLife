@@ -7,14 +7,12 @@
 #include "grid.c"
 
 int main(void) {
+	// Create grid
 	struct cell*** grid = initGrid(H, W);
-	newCell(5, 10, grid);
-	newCell(5, 11, grid);
-	newCell(5, 12, grid);
-	printCell(grid[5][11]);
-	for (int t=0;;t++) {
-		printGrid(grid, H, W);
-		printf("%i Generations\n", t);
-		sleep(1);
-	}
+
+	// Create cells
+	struct cell* head = newCell(NULL, 5, 10, grid);
+
+	// Print game
+	printGrid(grid, H, W);
 }
