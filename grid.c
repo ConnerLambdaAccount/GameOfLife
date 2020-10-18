@@ -1,5 +1,4 @@
 #include<stdlib.h>
-#include "cell.c"
 
 // Initialize 2d array of pointers to -> cell structures
 struct cell*** initGrid(int h, int w) {

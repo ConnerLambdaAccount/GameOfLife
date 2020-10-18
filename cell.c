@@ -1,3 +1,4 @@
+#include <stdlib.h>
 // Cell structure definition
 struct cell {
 	int y;
@@ -83,12 +84,29 @@ struct cell* newCell(struct cell* head, int y, int x, struct cell ***grid) {
 	}
 }
 
+/********************
+** DEBUG FUNCTIONS **
+********************/
+
 // Display cell information
 void printCell(struct cell* c) {
-	printf("addr: %p\n", c);
 	if (c) {
-		printf("y: %i\n", c->y);
-		printf("x: %i\n", c->x);
-		printf("next: %p\n", c->next);
+		if (c->next)
+			printf("grid[%i][%i] -> grid[%i][%i]\n", c->y, c->x, c->next->y, c->next->x);
+		else
+			printf("grid[%i][%i] -> NULL\n", c->y, c->x);
+	} else {
+		printf("printCell(): Cell does not exist\n");
 	}
 }
+
+// Print all cells in grid
+void printAllCells(struct cell* head, struct cell*** grid) {
+	struct cell* c = head;
+
+	while(c != NULL) {
+		printCell(c);
+		c = c->next;
+	}
+}
+
