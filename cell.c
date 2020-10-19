@@ -4,6 +4,7 @@ struct cell {
 	int y;
 	int x;
 	struct cell* next;
+	struct cell* prev;
 };
 
 // Helper function to return index of node as if it were in a 1D array
@@ -19,7 +20,7 @@ int hashCell(struct cell* c) {
 struct cell* newCell(struct cell* head, int y, int x, struct cell ***grid) {
 
 	// Init newCell with no pointers
-	struct cell newCell = { .y=y, .x=x, .next=NULL };
+	struct cell newCell = { .y=y, .x=x, .prev=NULL, .next=NULL };
 
 	// Allocate space for cell structure 
 	grid[y][x] = malloc(sizeof(struct cell));
@@ -46,6 +47,7 @@ struct cell* newCell(struct cell* head, int y, int x, struct cell ***grid) {
 	if(headHash > newCellHash) {
 	
 		// newCell is being added BEFORE the current head
+		head->prev = grid[y][x];
 		newCell.next = head;
 		*grid[y][x] = newCell;
 
@@ -66,7 +68,11 @@ struct cell* newCell(struct cell* head, int y, int x, struct cell ***grid) {
 			// newCellHash indicates it should be BETWEEN left and right nodes
 			if (leftHash < newCellHash && rightHash > newCellHash) {
 				left->next = grid[y][x];
+				right->prev = grid[y][x];
+
 				newCell.next = right;
+				newCell.prev = left; // ADDED for .prev support
+
 				*grid[y][x] = newCell;
 				return head;
 			}
@@ -79,6 +85,7 @@ struct cell* newCell(struct cell* head, int y, int x, struct cell ***grid) {
 		// 3. at the end of the list
 		// Reached end of list, append newCell to end
 		left->next = grid[y][x];
+		newCell.prev = left; // ADDED for .prev support
 		*grid[y][x] = newCell;
 		return head;
 	}
@@ -90,13 +97,10 @@ struct cell* remCell(struct cell* c) {
 	return NULL;
 }
 
-int neighborCount(struct cell* c, struct cell*** grid) {
+// Return amount of cell neighbors
+int neighborCount(int y, int x, struct cell*** grid) {
 
 	int neighbors = 0;
-
-	// Coordinates of c param
-	int y = c->y;
-	int x = c->x;
 
 	// Loop through all 8 possible neighbors
 	for(int yoffset=-1;yoffset<=1;yoffset++) {
@@ -120,12 +124,19 @@ int neighborCount(struct cell* c, struct cell*** grid) {
 ********************/
 
 // Display cell information
+// TODO: Needs .prev support
 void printCell(struct cell* c) {
 	if (c) {
+		if(c->prev)
+			printf("grid[%i][%i] <- ", c->prev->y, c->prev->x);
+		else
+			printf("NULL <- ");
+
 		if (c->next)
 			printf("grid[%i][%i] -> grid[%i][%i]\n", c->y, c->x, c->next->y, c->next->x);
 		else
 			printf("grid[%i][%i] -> NULL\n", c->y, c->x);
+
 	} else {
 		printf("printCell(): Cell does not exist\n");
 	}
