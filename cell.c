@@ -84,6 +84,37 @@ struct cell* newCell(struct cell* head, int y, int x, struct cell ***grid) {
 	}
 }
 
+struct cell* remCell(struct cell* c) {
+	// set c->prev->next = c->next
+	// deallocate c
+	return NULL;
+}
+
+int neighborCount(struct cell* c, struct cell*** grid) {
+
+	int neighbors = 0;
+
+	// Coordinates of c param
+	int y = c->y;
+	int x = c->x;
+
+	// Loop through all 8 possible neighbors
+	for(int yoffset=-1;yoffset<=1;yoffset++) {
+		for(int xoffset=-1;xoffset<=1;xoffset++) {
+			// Make sure grid[y][x] + offsets != c
+			if ( !(yoffset == 0 && xoffset == 0) ) {
+				// Make sure grid[y][x] + offsets is within bounds
+				if( (y+yoffset >= 0 && y+yoffset < H) && (x+xoffset >= 0 && x+xoffset < W) ) {
+					// found valid location for a cell, confirm this location has a cell
+					if( grid[y+yoffset][x+xoffset] != NULL )
+						neighbors++;
+				}
+			}
+		}
+	}
+	return neighbors;
+}
+
 /********************
 ** DEBUG FUNCTIONS **
 ********************/
