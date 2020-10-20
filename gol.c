@@ -13,10 +13,13 @@ int main(void) {
 	// Create cells
 	struct cell* head = newCell(NULL, 0, 4, grid);
 	head = newCell(head, 0, 0, grid);
-	head = newCell(head, 0, 1, grid);
-	head = newCell(head, 0, 3, grid);
-	head = newCell(head, 1, 10, grid);
-	head = newCell(head, 1, 5, grid);
+	head = remCell(grid[0][0], grid);
+	//head = newCell(head, 0, 1, grid);
+	//head = newCell(head, 0, 3, grid);
+	//head = newCell(head, 1, 10, grid);
+	//head = newCell(head, 1, 5, grid);
+	
+	//head = remCell(grid[1][5], grid);
 
 	// Print game
 	printGrid(grid, H, W);

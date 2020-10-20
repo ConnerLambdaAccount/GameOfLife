@@ -91,10 +91,39 @@ struct cell* newCell(struct cell* head, int y, int x, struct cell ***grid) {
 	}
 }
 
-struct cell* remCell(struct cell* c) {
+// Returns head, like addCell()
+struct cell* remCell(struct cell* c, struct cell*** grid) {
+	// Remove pointer from grid, don't want use-after-free
+	grid[c->y][c->x] = NULL;
+
 	// set c->prev->next = c->next
 	// deallocate c
-	return NULL;
+
+	// If remCell() not called on head
+	if(c->prev) {
+		if(c->next) {
+			// Called on node between two nodes
+			c->prev->next = c->next;
+			c->next->prev = c->prev;
+		} else {
+			// Called on end of list
+			c->prev->next = NULL;
+		}	
+		
+		// Find head
+		struct cell* head = c;
+		while(head->prev != NULL) {
+			head = head->prev;
+		}
+		free(c);
+		return head;
+	}
+	
+	// If remCell() called on head
+	struct cell* newHead = c->next;
+	newHead->prev = NULL;
+	free(c);
+	return newHead;
 }
 
 // Return amount of cell neighbors
