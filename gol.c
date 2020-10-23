@@ -1,9 +1,3 @@
-#include<stdio.h>
-#include<unistd.h>
-
-#define H 50
-#define W 150
-
 #include "gol.h"
 
 int main(void) {
