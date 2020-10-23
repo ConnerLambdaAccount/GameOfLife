@@ -5,6 +5,6 @@
 //#define H 90
 //#define W 136
 
-#include "Structs/cell.c"
+#include "cell.c"
 #include "grid.c"
 #include "rules.c"
