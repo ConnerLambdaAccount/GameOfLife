@@ -1,2 +1,4 @@
-gol
+GameOfLife
+.DS_Store
+.gitignore
 .swp
