@@ -32,7 +32,7 @@ void randomizeGrid(int h, int w, struct cell*** grid) {
 	// Seed rand
 	srand(time(NULL));
 	// Clear existing grid
-	clearGrid(grid);
+	clearGrid(h, w, grid);
 	for(int y=0;y<h;y++) {
 		for(int x=0;x<w;x++) {
 			// Random num with either be 0 or 1

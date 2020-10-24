@@ -1,5 +1,3 @@
 all:
-	gcc gol.c -o gol
+	gcc main.c -lSDL2 -lSDL2_ttf -o GameOfLife
 
-test:
-	gcc test.c -g -o test
